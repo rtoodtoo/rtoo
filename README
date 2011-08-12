@@ -1,0 +1,18 @@
+
+rtoo is piece of code written in python. What it does is to manage/configure bandwidth
+of your client machines based on several criteria IP,port etc. It has a shell like
+configuration interface which you can find in commercial management tools. In a nutshell,
+something like this;
+
+rtoo> setbw 192.168.1.0/27 1mbit
+rtoo> setbw 192.168.1.32/27 512kbit
+
+The sample commands given above will set respective bandwidth for IP addresses
+rtoo still needs time for its first release but I am pretty hopeful about my project.
+I have also some plans to add routing/firewall management once traffic control module
+is matured.
+  If anyone is also interested, please join me.
+
+
+Genco.
+
