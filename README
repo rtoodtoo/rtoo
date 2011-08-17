@@ -1,5 +1,4 @@
-
-rtoo is piece of code written in python. What it does is to manage/configure bandwidth
+rtoo is a piece of code written in python. What it does is to manage/configure bandwidth
 of your client machines based on several criteria IP,port etc. It has a shell like
 configuration interface which you can find in commercial management tools. In a nutshell,
 something like this;
