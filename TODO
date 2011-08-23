@@ -1,0 +1,12 @@
+
+TODO for version 0.1b
+- show active traffic
+- debug level modification
+- routing enable/check 
+- importing a file containing IP addresses having bandwidth assignments
+
+
+Later:
+- tcp hardening settings
+- sysctl management
+
