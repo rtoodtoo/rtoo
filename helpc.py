@@ -6,9 +6,10 @@ class helpc:
         print "syntax: set {options}"                                                                       
         print """USAGE:                                                                                  
         set pool {pool_name} bandwidth {rate} [comment]
-        set pool {pool_name} status    [remove|inactive|active]      
-        set bandwidth {member} {network} {bandwidth} {pool_name} [exceed|no-exceed] [comment]
-        set member {member_name} [remove|inactive|active] 
+        set pool {pool_name} status [remove|inactive|active]      
+        set member {member_name} {network} {rate} [remove|inactive|active] [comment]
+        set assign {member_name} {pool_name} [exceed|no-exceed]
+
         
         [HELP]
         >pool: creates a new pool
@@ -20,7 +21,7 @@ class helpc:
                  *inactive: temporarily make this pool inactive by which ALL members using this pool will have no traffic shaping
                  *active: activates an inactive pool which activates shaping in all connected members 
         
-        >bandwidth: sets bandwidth for a specific network in units kbit or Mbit and binds it into a shared pool
+        >assign: sets bandwidth for a specific network in units kbit or Mbit and binds it into a shared pool
                         *member: name to identify this specific network only alphanumeric characters allowed
                         *network: Network address in notation 192.168.1.0/24
                         *bandwidth: the rate in kbit or Mbit e.g 128kbit or 2Mbit
@@ -31,6 +32,7 @@ class helpc:
 
          >member: performs operation on specified member
                 *member_name: the member which should be changed
+                    *network: Network address in notation 192.168.1.0/24
                     *remove: removes the member from bandwidth management system!!!
                     *inactive: temporarily makes traffic shaping inactive 
                     *active: enables shaping back  
@@ -40,10 +42,10 @@ class helpc:
 
         set pool Engineering 2Mbit
         set pool Students 512Kbit
-        set bandwidth John 192.168.10/32 128kbit Engineering no-exceed
-        set bandwidth Bob 192.168.2.20/32 64kbit Students exceeda
         set pool Engineering inactive
-        set member John inactive
+        set member John 192.168.10.1/32 128kbit
+        set bandwidth John Engineering no-exceed
+        set bandwidth Bob Students exceed
         """                                                                                                
     def help_show(self):
         print "syntax: show {options}"

@@ -81,31 +81,56 @@ class CLI(cmd.Cmd,rtooc.IPT,rtooc.TC,helpc.helpc):
            else:
              print "An error occured during pool allocation"
       
-     
+    
+      ####MEMBER BEGIN####
+      if arg[0] == "member":
+        #Check option existence
+        try:
+          self.member_name = arg[1]
+          self.network = arg[2]
+          self.rate = arg[3]
+          #remove,inactive,active
+          self.state = arg[4]
+        except IndexError:
+          return self.help_set()
+        
+        #Comment is optional
+        try:
+          self.comment = arg[4]
+        except IndexError:
+          self.comment = None
+        #TODO: created/modify member table according to the structure
+         
+                  
+
  
       #Firt argument is address, it is a name for network address
       #and must be in conf.ini file
-      if arg[0] == "bandwidth":
+      if arg[0] == "assign":
         try:
-          self.address_name = arg[1]
-          self.network = arg[2]
-          self.bandwidth = arg[3]
-          self.pool_name = arg[4]
-          self.exceed = arg[5]
+          self.member_name = arg[1]
+          self.pool_name = arg[2]
+          self.exceed = arg[3]
         except (IndexError,ValueError):
           return self.help_set() 
       
-       ##FIXME: Check pool existence before BW setting
-       ##Checks: bandwidth,network,address_name for proper format
-       ##       
-       
-        if re.search(r'\W+',self.address_name):
-           print "Address name cannot have non-alpanumeric characters"
+        ##FIXME: There is a flaw in this regex, check once again 
+        if re.search(r'\W+',self.member_name):
+           print "Member name cannot have non-alpanumeric characters"
            return self.help_shell() 
         if not re.search(r'^\d+(kbit|Mbit)$',self.bandwidth):
            print self.bandwidth
            print "Bandwidth format is incorrect"
            return self.help_shell()
+
+        #Pool should be in place if this command is issued, check pool existence
+        cursor = conn.cursor() 
+        cursor.execute("SELECT * from pool where pool_name=%s",(self.pool_name))
+        cursor.close()
+        if cursor.rowcount==0:
+          return self.error_msg("Specified pool name doesn't exist, please set the pool name first using 'set pool' command")
+  
+
 
        #cursor = conn.cursor()
        #cursor.execute ("INSERT INTO bandwidth (address_id,address_name,network,bandwidth,exceed,comment) VALUES (null,%s,%s,'no_comment')",(self.pool_name,self.bandwidth))
